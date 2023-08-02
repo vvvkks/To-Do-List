@@ -1,5 +1,7 @@
 import React, {ChangeEvent,KeyboardEvent, useState} from "react";
 import {FilterValuesType} from "./App";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 export type TaskType = {
     id: string
@@ -17,17 +19,21 @@ type PropsType = {
 }
 
 export function TodoList(props: PropsType) {
-    const [title, setTitle] = useState("")
+    let [title, setTitle] = useState("")
+    let [error, setError] = useState<string | null>(null)
     const addTask = () => {
         if (title.trim() !== "") {
             props.addTask(title.trim());
             setTitle("")
+        } else {
+            setError("Field is required");
         }
     }
     const onChangeHandler =  (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        setError(null);
         if (e.charCode === 13) {
             props.addTask(title)
             setTitle("");
@@ -43,8 +49,10 @@ export function TodoList(props: PropsType) {
                 <input value={title}
                        onChange={onChangeHandler}
                        onKeyPress={onKeyPressHandler}
+                       className={error ? "error" : ""}
                 />
                 <button onClick={addTask}>+</button>
+                {error && <div className={"error-message"}>{error}</div>}
             </div>
             <ul>
                 {
