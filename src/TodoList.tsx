@@ -2,6 +2,8 @@ import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button, Checkbox, IconButton} from "@mui/material";
+import {Delete} from "@mui/icons-material";
 
 export type TaskType = {
     id: string
@@ -39,10 +41,12 @@ export function TodoList(props: PropsType) {
     return (
         <div>
             <h3> <EditableSpan title={props.title} onChange= {changeTodolistTitle} />
-                <button onClick={removeTodolist}>x</button>
+                <IconButton aria-label="delete" onClick={removeTodolist}>
+                    <Delete />
+                </IconButton>
             </h3>
             <AddItemForm addItem={addTask}/>
-            <ul>
+            <div>
                 {
                     props.tasks.map(task => {
                         const onChangeTitleHandler = (newValue: string) => {
@@ -56,34 +60,39 @@ export function TodoList(props: PropsType) {
                             props.removeTask(task.id, props.id)
                         }
 
-                        return <li key={task.id} className={task.isDone ? "is-done" : ""}>
-                            <input type={"checkbox"}
-                                   onChange={onChangeStatusHandler}
-                                   checked={task.isDone}/>
+                        return <div key={task.id} className={task.isDone ? "is-done" : ""}>
+                            <Checkbox
+                                color="success"
+                                onChange={onChangeStatusHandler}
+                                checked={task.isDone}/>
                             <EditableSpan title={task.title}
                                           onChange={onChangeTitleHandler}/>
-                            <button onClick={onRemoveHandler}>x
-                            </button>
-                        </li>
+                            <IconButton aria-label="delete" size="small" onClick={onRemoveHandler}>
+                                <Delete fontSize="inherit"/>
+                            </IconButton>
+                        </div>
                     })
                 }
-            </ul>
+            </div>
             <div>
-                <button className={props.filter === 'all' ? "active-filter" : ""}
+                <Button variant={props.filter === 'all' ? "contained" : "text"}
+                        color={"inherit"}
                         onClick={(e) => {
                             onAllClickHandler()
                         }}>All
-                </button>
-                <button className={props.filter === 'active' ? "active-filter" : ""}
+                </Button>
+                <Button variant={props.filter === 'active' ? "contained" : "text"}
+                        color={"secondary"}
                         onClick={(e) => {
                             onActiveClickHandler()
                         }}>Active
-                </button>
-                <button className={props.filter === 'completed' ? "active-filter" : ""}
+                </Button>
+                <Button variant={props.filter === 'completed' ? "contained" : "text"}
+                        color={"success"}
                         onClick={(e) => {
                             onCompletedClickHandler()
                         }}>Completed
-                </button>
+                </Button>
             </div>
         </div>
     )
