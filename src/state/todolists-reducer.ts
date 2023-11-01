@@ -55,3 +55,19 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionsType
             throw new Error("Unknown action type");
     }
 }
+
+export const RemoveTodolistAC = (todolistId: string): RemoveTodolistActionType => {
+    return {type: "REMOVE-TODOLIST", id: todolistId}
+}
+
+export const AddTodolistAC = (todolistTitle: string): AddTodolistActionType => {
+    return {type: "ADD-TODOLIST", title: todolistTitle}
+}
+
+export const ChangeTodolistTitleAC = (todolistId: string, todolistTitle: string): ChangeTodolistTitleActionType => {
+    return {type: "CHANGE-TODOLIST-TITLE",id: todolistId, title: todolistTitle}
+}
+
+export const ChangeTodolistFilterAC = (todolistId: string, todolistFilter: FilterValuesType): ChangeTodolistFilterActionType => {
+    return {type: "CHANGE-TODOLIST-FILTER", id: todolistId, filter: todolistFilter}
+}
