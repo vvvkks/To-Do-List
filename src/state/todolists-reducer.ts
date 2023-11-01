@@ -16,6 +16,20 @@ export const todolistsReducer = (state: Array<TodolistType>, action: ActionType)
                 filter: "all"
             }]
         }
+        case 'CHANGE-TODOLIST-TITLE': {
+            const todolist = state.find(tl => tl.id === action.id);
+            if (todolist) {
+                todolist.title = action.title;
+            }
+            return[...state]
+        }
+        case 'CHANGE-TODOLIST-FILTER': {
+            const todolist = state.find(tl => tl.id === action.id);
+            if (todolist) {
+                todolist.filter = action.filter;
+            }
+            return[...state]
+        }
         default:
             throw new Error("Unknown action type");
     }
