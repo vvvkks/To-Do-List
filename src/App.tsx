@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { TodoList } from './TodoList';
+import {TaskType, TodoList} from './TodoList';
 import { v1 } from 'uuid';
 import { AddItemForm } from './AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
@@ -13,11 +13,15 @@ export type TodolistType = {
     filter: FilterValuesType;
 };
 
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+
 function App() {
     const [filter, setFilter] = useState<FilterValuesType>('all');
 
     const [todolists, setTodolists] = useState<TodolistType[]>([]);
-    const [tasksObj, setTasks] = useState<{ [key: string]: Array<{ id: string; title: string; isDone: boolean }> }>({});
+    const [tasksObj, setTasks] = useState<TasksStateType>({});
 
     function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
         const tasks = tasksObj[todolistId];
