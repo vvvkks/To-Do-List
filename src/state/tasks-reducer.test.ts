@@ -109,7 +109,7 @@ test('new property with array should be added when new todolist is added', () =>
         ]
     };
 
-    const action = addTodolistAC("new todolist", "todolistId2");
+    const action = addTodolistAC("new todolist");
 
     const endState = tasksReducer(startState, action)
 
