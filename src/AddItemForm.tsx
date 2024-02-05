@@ -4,7 +4,7 @@ import {AddCircle} from "@mui/icons-material";
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,4 +41,4 @@ export function AddItemForm(props: AddItemFormPropsType) {
             <AddCircle/>
         </IconButton>
     </div>
-}
+})
